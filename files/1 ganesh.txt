@@ -1,0 +1,26 @@
+<%@ page import="java.io.*" %>
+<%@ page import="java.sql.*" %>
+<%
+String User_id=request.getParameter("User_id");
+String Password=request.getParameter("Password");
+try
+{
+Class.forName("com.mysql.jdbc.Driver");
+Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/eg_one", "root", ""); 
+Statement st=con.createStatement();
+ResultSet rs=st.executeQuery("select * from register where User_id='"+User_id+"' and Password='"+Password+"'");
+	if(rs.next())
+	{%>
+        <jsp:forward page="index.html"></jsp:forward>
+        <%}
+        else
+        {
+        out.println("login failure");
+        }
+}
+catch(Exception e)
+{
+out.print(e);
+}
+con.close();
+%>
